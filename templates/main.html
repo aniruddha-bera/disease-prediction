@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Disease Predictor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main_page.css') }}">
+    <style>
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: aqua;
+        }
+
+        .card {
+            background-color:blanchedalmond;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 30px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .search-bar {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+
+        .checkbox-group {
+            max-height: 250px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .symptom-item {
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .predict-btn {
+            margin-top: 20px;
+            width: 100%;
+            padding: 12px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .result {
+            margin-top: 30px;
+            padding: 20px;
+            background: #e6f7ff;
+            border-radius: 10px;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h1>Disease Prediction</h1>
+
+            <!-- Search Bar -->
+            <input type="text" id="search-input" class="search-bar" placeholder="Search symptoms...">
+
+            <!-- Symptom Selection Form -->
+            <form action="/predict" method="POST">
+                <div class="checkbox-group" id="symptom-list">
+                    {% for symptom in symptoms %}
+                        <label class="symptom-item">
+                            <input type="checkbox" name="symptoms" value="{{ symptom }}">
+                            {{ symptom.capitalize() }}
+                        </label>
+                    {% endfor %}
+                </div>
+                <button type="submit" class="predict-btn">Predict Disease</button>
+            </form>
+
+            {% if prediction and treatment %}
+            <div class="result">
+                <h2>Prediction Result</h2>
+                <p><strong>Disease Name:</strong> {{ prediction }}</p>
+                <p><strong>Treatment:</strong> {{ treatment }}</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- JS for symptom filtering -->
+    <script>
+        const searchInput = document.getElementById("search-input");
+        const symptomList = document.getElementById("symptom-list");
+        const symptomItems = symptomList.getElementsByClassName("symptom-item");
+
+        searchInput.addEventListener("input", function () {
+            const query = this.value.toLowerCase();
+            Array.from(symptomItems).forEach(item => {
+                const labelText = item.textContent.toLowerCase();
+                item.style.display = labelText.includes(query) ? "block" : "none";
+            });
+        });
+    </script>
+</body>
+</html>
