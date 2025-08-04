@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <title>Login Form</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-
 </head>
 <body>
     <div class="form-container">
@@ -13,7 +12,7 @@
         <!-- Login Form -->
         <form id="loginForm" action="/login" method="POST">
             <div class="mb-3">
-                <label>Username or Email</label>
+                <label>Username</label>
                 <input type="text" name="username" class="form-control" required autocomplete="off">
             </div>
             <div class="mb-3">
@@ -28,12 +27,8 @@
         <!-- Signup Form (hidden by default) -->
         <form id="signupForm" action="/signup" method="POST" style="display: none;">
             <div class="mb-3">
-                <label>Full Name or username</label>
+                <label>Username</label>
                 <input type="text" name="username" class="form-control" required autocomplete="off">
-            </div>
-            <div class="mb-3">
-                <label>Email</label>
-                <input type="email" name="email" class="form-control" required autocomplete="off">
             </div>
             <div class="mb-3">
                 <label>Password</label>
@@ -49,12 +44,6 @@
                 <span id="toggleText">New user?</span>
                 <button id="toggleBtn" class="toggle-btn" type="button" onclick="toggleForms()">Sign up here</button>
             </small>
-        </div>
-
-        <hr>
-
-        <div class="d-grid mb-2">
-            <a href="/login/google" class="btn btn-danger">Continue with Google</a>
         </div>
     </div>
 
